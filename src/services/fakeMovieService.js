@@ -14,7 +14,7 @@ const movies = [
     title: "Die Hard",
     genre: { _id: "5b21ca3eeb7f6fbccd471818", name: "Action" },
     numberInStock: 5,
-    like: 1,
+    liked: true,
     dailyRentalRate: 2.5
   },
   {
