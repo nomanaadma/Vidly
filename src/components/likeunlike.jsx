@@ -6,18 +6,8 @@ import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons'
 
 class Likeunlike extends Component {
 
-    state = { 
-        like: 0
-    };
-    
-
     getIcon() {
-        return this.state.like == 0 ? farHeart : fasHeart; 
-    }
-
-    handleLike = () => {
-        const like = this.state.like == 0 ? 1 : 0;
-        this.setState({ like });
+        return this.props.movie.like === 1 ? fasHeart : farHeart; 
     }
     
     render() { 
@@ -25,7 +15,7 @@ class Likeunlike extends Component {
         const icon = this.getIcon();
 
         return ( 
-            <FontAwesomeIcon onClick={this.handleLike} icon={icon} className="link-unlink-btn" />
+            <FontAwesomeIcon onClick={this.props.onLike} icon={icon} className="link-unlink-btn" />
         );
         
     }
