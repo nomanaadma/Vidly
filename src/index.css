@@ -13,4 +13,6 @@ code {
     monospace;
 }
 
-
+.link-unlink-btn {
+  cursor: pointer;
+}
