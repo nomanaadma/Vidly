@@ -1,10 +1,13 @@
 import React, { Component } from "react";
-import MoviesTable from './moviesTable';
+import MoviesTable from "./moviesTable";
 import ListGroup from "./common/listGroup";
 import Pagination from "./common/pagination";
 import { getMovies } from "../services/fakeMovieService";
 import { getGenres } from "../services/fakeGenreService";
 import { paginate } from "../utils/paginate";
+import _ from 'lodash';
+
+// TODO: when we are on third page and press delete it shows empty data
 
 class Movies extends Component {
     state = {
@@ -12,16 +15,22 @@ class Movies extends Component {
         genres: [],
         pageSize: 4,
         currentPage: 1,
+        itemsOnCurrentPage: 0,
+        sortColumn: { path: 'title', 'order': 'asc' }
     };
 
     componentDidMount() {
-        const genres = [{ _id: 'all', name: 'All Genres'}, ...getGenres() ];
+        const genres = [{ _id: "all", name: "All Genres" }, ...getGenres()];
         this.setState({ movies: getMovies(), genres });
     }
 
     handleDelete = movie => {
         const movies = this.state.movies.filter(m => m._id !== movie._id);
         this.setState({ movies });
+    };
+
+    handleSort = sortColumn => {
+        this.setState({ sortColumn });
     };
 
     handleLike = movie => {
@@ -45,16 +54,20 @@ class Movies extends Component {
         const {
             pageSize,
             currentPage,
+            sortColumn,
             selectedGenre,
             movies: allMovies,
         } = this.state;
 
         if (count === 0) return <p>There are no movies in the database.</p>;
 
-        const filtered = selectedGenre && selectedGenre._id != 'all'
-            ? allMovies.filter(m => m.genre._id === selectedGenre._id)
-            : allMovies;
-        const movies = paginate(filtered, currentPage, pageSize);
+        const filtered =
+            selectedGenre && selectedGenre._id !== "all"
+                ? allMovies.filter(m => m.genre._id === selectedGenre._id)
+                : allMovies;
+
+        const sorterd = _.orderBy(filtered, [sortColumn.path], [sortColumn.order]);
+        const movies = paginate(sorterd, currentPage, pageSize);
 
         return (
             <React.Fragment>
@@ -70,7 +83,13 @@ class Movies extends Component {
                     </div>
                     <div className="col-9">
                         <p>Showing {filtered.length} movies in the database.</p>
-                        <MoviesTable movies={movies} onLike={this.handleLike} onDelete={this.handleDelete} />
+                        <MoviesTable
+                            movies={movies}
+                            sortColumn={sortColumn}
+                            onLike={this.handleLike}
+                            onDelete={this.handleDelete}
+                            onSort={this.handleSort}
+                        />
                         <Pagination
                             itemsCount={filtered.length}
                             pageSize={pageSize}
