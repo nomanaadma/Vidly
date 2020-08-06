@@ -16,3 +16,7 @@ code {
 .link-unlink-btn {
   cursor: pointer;
 }
+
+.clickable {
+  cursor: pointer;
+}
