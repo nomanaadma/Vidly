@@ -4,12 +4,12 @@ import { faHeart as fasHeart } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
 
 
-const Like = props => {
+const Like = ({ liked, onLike }) => {
 
-    const icon = props.liked ? fasHeart : farHeart;
+    const icon = liked ? fasHeart : farHeart;
 
     return ( 
-        <FontAwesomeIcon onClick={props.onLike} icon={icon} className="link-unlink-btn" />
+        <FontAwesomeIcon onClick={onLike} icon={icon} className="link-unlink-btn" />
     );
         
 }
