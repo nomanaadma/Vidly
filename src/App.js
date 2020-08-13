@@ -6,7 +6,7 @@ import Customers from './components/customers';
 import Rentals from './components/rentals';
 import NotFound from './components/notFound';
 import Navbar from './components/navbar';
-import LoginForm from './components/common/loginForm';
+import LoginForm from './components/loginForm';
 import "./App.css";
 
 function App() {
