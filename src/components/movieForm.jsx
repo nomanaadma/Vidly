@@ -1,7 +1,7 @@
 import React from 'react';
 import Joi from "joi-browser";
 import Form from './common/form';
-
+import { getGenres } from './../services/fakeGenreService';
 
 class MovieForm extends Form {
     state = {
@@ -12,7 +12,16 @@ class MovieForm extends Form {
             dailyRentalRate: "",
         },
         errors: {},
+        genres: [],
     };
+
+    componentDidMount() {
+
+        // console.log(this.props.match.params.id);
+        const genres = [{ _id: "", name: "Select" }, ...getGenres()];
+        this.setState({ genres });
+
+    }
 
     schema = {
         title: Joi.string().required().label("Title"),
@@ -25,22 +34,21 @@ class MovieForm extends Form {
         
         // call the server
         console.log("submitted");
-        
+
     }
 
     render() { 
-        const { match, history } = this.props;
+        
         return ( 
             <div>
-                <h1>Movie Form {match.params.id}</h1> 
+                <h1>Movie Form {this.props.match.params.id}</h1> 
                 <form onSubmit={this.handleSubmit}>
                     {this.renderInput('title', 'Title')}
-                    {this.renderInput('genre', 'Genre')}
+                    {this.renderSelect('genre', 'Genre', this.state.genres)}
                     {this.renderInput('numberInStock', 'Number in Stock')}
                     {this.renderInput('dailyRentalRate', 'Rate')}
                     {this.renderButton('Save')}
                 </form>
-                {/* <button className="btn btn-primary" onClick={ () => history.push('/movies') }>Save</button> */}
             </div>
         );
     }
