@@ -32,10 +32,8 @@ class Form extends Component {
 
         const errors = this.validate();
         this.setState({ errors });
-        if (errors) return;
-
+        if ( Object.keys(errors).length) return;        
         this.doSubmit();
-
     };
 
     handleChange = ({ currentTarget: input }) => {
@@ -76,7 +74,7 @@ class Form extends Component {
         );
     }
 
-    renderSelect(name, label, listData) {
+    renderSelect(name, label, options) {
         
         const { data, errors } = this.state;
 
@@ -84,7 +82,7 @@ class Form extends Component {
             <Select
                 name={name}
                 label={label}
-                listData={listData}
+                options={options}
                 value={data[name]}
                 onChange={this.handleChange}
                 error={errors[name]}
