@@ -7,6 +7,7 @@ import { getGenres } from "../services/fakeGenreService";
 import { paginate } from "../utils/paginate";
 import { Link } from 'react-router-dom';
 import _ from 'lodash';
+import SearchBox from './common/searchBox';
 
 // TODO: when we are on third page and press delete it shows empty data
 
@@ -17,6 +18,8 @@ class Movies extends Component {
         pageSize: 4,
         currentPage: 1,
         itemsOnCurrentPage: 0,
+        searchQuery: "t",
+        selectedGenre: "",
         sortColumn: { path: 'title', 'order': 'asc' }
     };
 
@@ -47,8 +50,12 @@ class Movies extends Component {
     };
 
     handleGenreSelect = genre => {
-        this.setState({ selectedGenre: genre, currentPage: 1 });
+        this.setState({ selectedGenre: genre, searchQuery: "", currentPage: 1 });
     };
+
+    handleSearch = query => {
+        this.setState({ searchQuery: query, selectedGenre: null, currentPage: 1 });
+    }
 
     getPagedData = () => {
 
@@ -58,13 +65,16 @@ class Movies extends Component {
             sortColumn,
             selectedGenre,
             movies: allMovies,
+            searchQuery
         } = this.state;
 
+        let filtered = allMovies;
 
-        const filtered =
-        selectedGenre && selectedGenre._id !== "all"
-            ? allMovies.filter(m => m.genre._id === selectedGenre._id)
-            : allMovies;
+        if(searchQuery) {
+            filtered = allMovies.filter(m => m.title.toLowerCase().startsWith(searchQuery.toLowerCase()) );
+        } else if(selectedGenre && selectedGenre._id !== "all") {
+            filtered = allMovies.filter(m => m.genre._id === selectedGenre._id);
+        }
 
         const sorterd = _.orderBy(filtered, [sortColumn.path], [sortColumn.order]);
         const movies = paginate(sorterd, currentPage, pageSize);
@@ -81,6 +91,7 @@ class Movies extends Component {
             pageSize,
             currentPage,
             sortColumn,
+            searchQuery
         } = this.state;
 
         if (count === 0) return <p>There are no movies in the database.</p>;
@@ -104,6 +115,7 @@ class Movies extends Component {
                             New Movie
                         </Link>
                         <p>Showing {totalCount} movies in the database.</p>
+                        <SearchBox value={searchQuery} onSearch={this.handleSearch}  />
                         <MoviesTable
                             movies={movies}
                             sortColumn={sortColumn}
