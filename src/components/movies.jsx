@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import MoviesTable from "./moviesTable";
 import ListGroup from "./common/listGroup";
 import Pagination from "./common/pagination";
-import { getMovies } from "../services/movieService";
+import { getMovies, deleteMovie } from "../services/movieService";
 import { getGenres } from "../services/genreService";
 import { paginate } from "../utils/paginate";
 import { Link } from 'react-router-dom';
@@ -24,15 +24,28 @@ class Movies extends Component {
     };
 
     async componentDidMount() {
-        const serviceGenres = await getGenres();
-        const serviceMovies = await getMovies();
-        const genres = [{ _id: "all", name: "All Genres" }, ...serviceGenres];
-        this.setState({ movies: serviceMovies, genres });
+        const { data } = await getGenres();
+        const { data: movies } = await getMovies();
+        const genres = [{ _id: "all", name: "All Genres" }, ...data];
+        this.setState({ movies, genres });
     }
 
-    handleDelete = movie => {
+    handleDelete = async movie => {
+
+        const orignalMovies = this.state.movies;
         const movies = this.state.movies.filter(m => m._id !== movie._id);
         this.setState({ movies });
+
+        try {
+            await deleteMovie(movie._id);
+        } catch(ex) {
+
+            if(ex.response && ex.response.status === 404)
+                alert('This post has already been deleted.');
+            this.setState({ movies: orignalMovies });
+
+        }
+
     };
 
     handleSort = sortColumn => {
