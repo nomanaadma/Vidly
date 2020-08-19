@@ -1,7 +1,7 @@
 import httpService from './httpService';
 import { apiUrl } from './../config.json';
 
-const apiEndpoint = apiUrl+'/users';
+const apiEndpoint = '/users';
 
 export async function register(user) {
     return await httpService.post(apiEndpoint, {
