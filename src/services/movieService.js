@@ -7,19 +7,19 @@ function movieUrl(movieId) {
   return `${apiEndpoint}/${movieId}`;
 }
 
-export async function getMovies() {
-  return await httpService.get(apiEndpoint);
+export function getMovies() {
+  return httpService.get(apiEndpoint);
 }
 
-export async function deleteMovie(movieId) {
-  return await httpService.delete(movieUrl(movieId));
+export function deleteMovie(movieId) {
+  return httpService.delete(movieUrl(movieId));
 }
 
-export async function getMovie(id) {
-  return await httpService.get(movieUrl(id));
+export function getMovie(id) {
+  return httpService.get(movieUrl(id));
 }
 
-export async function saveMovie(movie) {
+export function saveMovie(movie) {
 
   if(movie._id) {
     const body = {...movie};
