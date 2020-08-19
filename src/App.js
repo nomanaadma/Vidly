@@ -10,6 +10,7 @@ import LoginForm from './components/loginForm';
 import RegisterForm from './components/registerForm';
 import Logout from './components/logout'
 import auth from './services/authService';
+import ProtectedRoute from './components/common/protectedRoute';
 import "./App.css";
 
 class App extends Component {
@@ -23,16 +24,21 @@ class App extends Component {
 
     render() {
 
+        const { user } = this.state;
+
         return (
             <React.Fragment>
-                <Navbar user={this.state.user} />
+                <Navbar user={user} />
                 <main className="container">
                     <Switch>
                         <Route path="/register" component={RegisterForm} />
                         <Route path="/login" component={LoginForm} />
                         <Route path="/logout" component={Logout} />
-                        <Route path="/movies/:id" component={MovieForm} />
-                        <Route path="/movies" component={Movies} />
+                        <ProtectedRoute path="/movies/:id" component={MovieForm} />
+                        <Route 
+                            path="/movies" 
+                            render={ props => <Movies {...props} user={user} />} 
+                        />
                         <Route path="/customers" component={Customers} />
                         <Route path="/rentals" component={Rentals} />
                         <Route path="/not-found" component={NotFound} />

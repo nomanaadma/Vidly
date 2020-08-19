@@ -5,9 +5,9 @@ import Pagination from "./common/pagination";
 import { getMovies, deleteMovie } from "../services/movieService";
 import { getGenres } from "../services/genreService";
 import { paginate } from "../utils/paginate";
-import { Link } from 'react-router-dom';
-import _ from 'lodash';
-import SearchBox from './common/searchBox';
+import { Link } from "react-router-dom";
+import _ from "lodash";
+import SearchBox from "./common/searchBox";
 
 // TODO: when we are on third page and press delete it shows empty data
 
@@ -20,7 +20,7 @@ class Movies extends Component {
         itemsOnCurrentPage: 0,
         searchQuery: "",
         selectedGenre: "",
-        sortColumn: { path: 'title', 'order': 'asc' }
+        sortColumn: { path: "title", order: "asc" },
     };
 
     async componentDidMount() {
@@ -31,21 +31,17 @@ class Movies extends Component {
     }
 
     handleDelete = async movie => {
-
         const orignalMovies = this.state.movies;
         const movies = this.state.movies.filter(m => m._id !== movie._id);
         this.setState({ movies });
 
         try {
             await deleteMovie(movie._id);
-        } catch(ex) {
-
-            if(ex.response && ex.response.status === 404)
-                alert('This post has already been deleted.');
+        } catch (ex) {
+            if (ex.response && ex.response.status === 404)
+                alert("This post has already been deleted.");
             this.setState({ movies: orignalMovies });
-
         }
-
     };
 
     handleSort = sortColumn => {
@@ -65,53 +61,62 @@ class Movies extends Component {
     };
 
     handleGenreSelect = genre => {
-        this.setState({ selectedGenre: genre, searchQuery: "", currentPage: 1 });
+        this.setState({
+            selectedGenre: genre,
+            searchQuery: "",
+            currentPage: 1,
+        });
     };
 
     handleSearch = query => {
-        this.setState({ searchQuery: query, selectedGenre: null, currentPage: 1 });
-    }
+        this.setState({
+            searchQuery: query,
+            selectedGenre: null,
+            currentPage: 1,
+        });
+    };
 
     getPagedData = () => {
-
         const {
             pageSize,
             currentPage,
             sortColumn,
             selectedGenre,
             movies: allMovies,
-            searchQuery
+            searchQuery,
         } = this.state;
 
         let filtered = allMovies;
 
-        if(searchQuery) {
-            filtered = allMovies.filter(m => m.title.toLowerCase().startsWith(searchQuery.toLowerCase()) );
-        } else if(selectedGenre && selectedGenre._id !== "all") {
+        if (searchQuery) {
+            filtered = allMovies.filter(m =>
+                m.title.toLowerCase().startsWith(searchQuery.toLowerCase())
+            );
+        } else if (selectedGenre && selectedGenre._id !== "all") {
             filtered = allMovies.filter(m => m.genre._id === selectedGenre._id);
         }
 
-        const sorterd = _.orderBy(filtered, [sortColumn.path], [sortColumn.order]);
+        const sorterd = _.orderBy(
+            filtered,
+            [sortColumn.path],
+            [sortColumn.order]
+        );
         const movies = paginate(sorterd, currentPage, pageSize);
 
         return {
             totalCount: filtered.length,
-            data: movies
-        }
-    }
+            data: movies,
+        };
+    };
 
     render() {
         const { length: count } = this.state.movies;
-        const {
-            pageSize,
-            currentPage,
-            sortColumn,
-            searchQuery
-        } = this.state;
+        const { pageSize, currentPage, sortColumn, searchQuery } = this.state;
+        const { user } = this.props;
 
         if (count === 0) return <p>There are no movies in the database.</p>;
 
-        const {totalCount, data: movies} = this.getPagedData();
+        const { totalCount, data: movies } = this.getPagedData();
 
         return (
             <React.Fragment>
@@ -126,11 +131,19 @@ class Movies extends Component {
                         />
                     </div>
                     <div className="col-9">
-                        <Link to="/movies/new" className="btn btn-primary mb-2">
-                            New Movie
-                        </Link>
+                        {user && (
+                            <Link
+                                to="/movies/new"
+                                className="btn btn-primary mb-2"
+                            >
+                                New Movie
+                            </Link>
+                        )}
                         <p>Showing {totalCount} movies in the database.</p>
-                        <SearchBox value={searchQuery} onSearch={this.handleSearch}  />
+                        <SearchBox
+                            value={searchQuery}
+                            onSearch={this.handleSearch}
+                        />
                         <MoviesTable
                             movies={movies}
                             sortColumn={sortColumn}
