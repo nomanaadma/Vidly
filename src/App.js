@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import jwtDecode from 'jwt-decode';
 import Movies from './components/movies';
 import MovieForm from './components/movieForm';
 import Customers from './components/customers';
@@ -9,7 +8,8 @@ import NotFound from './components/notFound';
 import Navbar from './components/navbar';
 import LoginForm from './components/loginForm';
 import RegisterForm from './components/registerForm';
-import Logout from './components/common/logout';
+import Logout from './components/logout'
+import auth from './services/authService';
 import "./App.css";
 
 class App extends Component {
@@ -17,11 +17,8 @@ class App extends Component {
     state = {};
 
     componentDidMount() {
-        try {
-            const jwt = localStorage.getItem('token');
-            const user = jwtDecode(jwt);
-            this.setState({ user })
-        } catch (ex) {}
+        const user = auth.currentUser();
+        this.setState({ user })
     }
 
     render() {
