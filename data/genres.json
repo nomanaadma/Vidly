@@ -1,0 +1,21 @@
+[{
+  "_id": {
+    "$oid": "5f3c0f24146cac1d9047a131"
+  },
+  "name": "Comedy"
+},{
+  "_id": {
+    "$oid": "5f3c0f24146cac1d9047a13d"
+  },
+  "name": "Thriller"
+},{
+  "_id": {
+    "$oid": "5f3c0f24146cac1d9047a139"
+  },
+  "name": "Romance"
+},{
+  "_id": {
+    "$oid": "5f3c0f24146cac1d9047a135"
+  },
+  "name": "Action"
+}]

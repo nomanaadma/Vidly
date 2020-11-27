@@ -1,0 +1,118 @@
+[{
+  "_id": {
+    "$oid": "5f621c1900adeb001754841e"
+  },
+  "title": "Terminator",
+  "genre": {
+    "_id": {
+      "$oid": "5f3c0f24146cac1d9047a135"
+    },
+    "name": "Action"
+  },
+  "numberInStock": 6,
+  "dailyRentalRate": 2.5
+},{
+  "_id": {
+    "$oid": "5f621c4000adeb0017548421"
+  },
+  "title": "Die Hard",
+  "genre": {
+    "_id": {
+      "$oid": "5f3c0f24146cac1d9047a135"
+    },
+    "name": "Action"
+  },
+  "numberInStock": 5,
+  "dailyRentalRate": 2.5
+},{
+  "_id": {
+    "$oid": "5f621c5100adeb0017548425"
+  },
+  "title": "Get Out",
+  "genre": {
+    "_id": {
+      "$oid": "5f3c0f24146cac1d9047a13d"
+    },
+    "name": "Thriller"
+  },
+  "numberInStock": 8,
+  "dailyRentalRate": 3.5
+},{
+  "_id": {
+    "$oid": "5f621c5f00adeb001754842a"
+  },
+  "title": "Trip to Italy",
+  "genre": {
+    "_id": {
+      "$oid": "5f3c0f24146cac1d9047a131"
+    },
+    "name": "Comedy"
+  },
+  "numberInStock": 7,
+  "dailyRentalRate": 3.5
+},{
+  "_id": {
+    "$oid": "5f621c6d00adeb0017548430"
+  },
+  "title": "Airplane",
+  "genre": {
+    "_id": {
+      "$oid": "5f3c0f24146cac1d9047a131"
+    },
+    "name": "Comedy"
+  },
+  "numberInStock": 7,
+  "dailyRentalRate": 3.5
+},{
+  "_id": {
+    "$oid": "5f621c7800adeb0017548437"
+  },
+  "title": "Wedding Crashers",
+  "genre": {
+    "_id": {
+      "$oid": "5f3c0f24146cac1d9047a131"
+    },
+    "name": "Comedy"
+  },
+  "numberInStock": 7,
+  "dailyRentalRate": 3.5
+},{
+  "_id": {
+    "$oid": "5f621c8600adeb001754843f"
+  },
+  "title": "Gone Girl",
+  "genre": {
+    "_id": {
+      "$oid": "5f3c0f24146cac1d9047a13d"
+    },
+    "name": "Thriller"
+  },
+  "numberInStock": 7,
+  "dailyRentalRate": 4.5
+},{
+  "_id": {
+    "$oid": "5f621c9200adeb0017548448"
+  },
+  "title": "The Sixth Sense",
+  "genre": {
+    "_id": {
+      "$oid": "5f3c0f24146cac1d9047a13d"
+    },
+    "name": "Thriller"
+  },
+  "numberInStock": 4,
+  "dailyRentalRate": 3.5
+},{
+  "_id": {
+    "$oid": "5f621c9d00adeb0017548452"
+  },
+  "title": "The Avengers",
+  "genre": {
+    "_id": {
+      "$oid": "5f3c0f24146cac1d9047a135"
+    },
+    "name": "Action"
+  },
+  "numberInStock": 7,
+  "dailyRentalRate": 3.5
+}]
